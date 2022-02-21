@@ -5,6 +5,8 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 Clone this repo :
 
+- `git clone https://github.com/SuhasD/swapi.git`
+
 Navigate to the root folder and install all dependencies :
 
 - `yarn` or `npm install`
