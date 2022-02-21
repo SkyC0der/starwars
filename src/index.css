@@ -1,0 +1,62 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+button.placeholder{
+  border: none;
+}
+
+.movieCard{
+  margin:10px;
+}
+
+.speciesEntries{
+  margin-top:40px;
+}
+
+.speciesEntries li{
+  text-transform: capitalize;
+}
+
+.characterTable{
+  margin-top:40px;
+}
+
+.characterTable thead th{
+  text-transform: capitalize;
+  cursor: pointer;
+}
+
+
+th span.sort-by { 
+	padding-right: 18px;
+	position: relative;
+}
+span.sort-by:before,
+span.sort-by:after {
+	border: 4px solid transparent;
+	content: "";
+	display: block;
+	height: 0;
+	right: 5px;
+	top: 50%;
+	position: absolute;
+	width: 0;
+}
+span.sort-by:before {
+	border-bottom-color: #666;
+	margin-top: -9px;
+}
+span.sort-by:after {
+	border-top-color: #666;
+	margin-top: 1px;
+}
+
+.loader p{
+  margin-top: 30px;
+}
