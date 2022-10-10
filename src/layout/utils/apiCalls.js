@@ -1,5 +1,5 @@
 import axios from 'axios'
-const MOVIES_LIST_URL = 'https://swapi.dev/api/films/';
+const MOVIES_LIST_URL = 'https://private-cors-server.up.railway.app/https://swapi.dev/api/films/';
 const MINUTES_TO_CACHE = 5;
 
 const writeToCache = (url, data) => localStorage.setItem(url, JSON.stringify(data));
@@ -23,6 +23,7 @@ export const getMovies = async () => {
             releaseDate: movie.release_date,
             episode_id: movie.episode_id,
             director: movie.director,
+            opening_crawl: movie.opening_crawl,
             id: movie.url.split('/')?.slice(-2)[0],
         }));
         const cacheData = {
@@ -47,49 +48,42 @@ export const getMovieDetails = async (movieId) => {
         const movieDetailResponse = await axios(MOVIE_DETAILS_URL);
         movieDetailJson = await movieDetailResponse.data;
 
-        const getHomeWorld = (url) => {
-            const cachedData = readFromCache(url);
-            if (cachedData?.timestamp && compareTime(cachedData?.timestamp)) {
-                const data = cachedData.data;
-                return data;
-            }
+
+        const cmToInFt = (cm) => {
+            const inches = Math.round(cm / 2.54)
+            return `(${Math.floor(inches / 12)}ft / ${inches % 12}in)`
+
+        }
+
+        const getTotalHeight = movieDetailJson.characters.map((url) => {
             return axios(url)
                 .then((res) => res.data)
-                .then((home) => home.name);
-        }
+                .then(async (char) => (
+                    char.height === "unknown" ? 0 : parseInt(char.height)
+                ));
+        });
 
         const getCharacters = movieDetailJson.characters.map((url) => {
             return axios(url)
                 .then((res) => res.data)
                 .then(async (char) => ({
                     name: char.name,
-                    mass: char.mass === 'unknown' ? 'Unknown' : `${char.mass}kg`,
-                    height: char.height === 'unknown' ? 'Unknown' : `${char.height}cm`,
-                    homeworld: await getHomeWorld(char.homeworld),
+                    gender: char.gender === 'n/a' ? 'A Droid' : `${char.gender}`,
+                    height: char.height === 'unknown' ? 'Unknown' : `${char.height}cm ${cmToInFt(char.height)}`,
                 }));
         });
 
-        const speciesCount = {};
-        const getSpecies = movieDetailJson.species.map((url) => {
-            return axios(url)
-                .then((res) => res.data)
-                .then(s => {
-                    const classification = s.classification;
-                    speciesCount[classification] ? speciesCount[classification]++ : speciesCount[classification] = 1;
-                    return s;
-                });
-        })
-
+        
         const characters = await Promise.all(getCharacters);
-        const species = await Promise.all(getSpecies);
+        const totalHeightArray = await Promise.all(getTotalHeight)
+        const totalHeight = await totalHeightArray.reduce((a, b) => a + b);
         const filteredMovieData = {
             title: movieDetailJson.title,
             director: movieDetailJson.director,
             episodeId: movieDetailJson.episode_id,
             releaseDate: movieDetailJson.release_date,
-            characters : characters.sort( (a, b) => a.name.localeCompare(b.name)),
-            species,
-            speciesCount,
+            characters: characters.sort((a, b) => a.name.localeCompare(b.name)),
+            totalHeight,
         }
 
         const cacheData = {

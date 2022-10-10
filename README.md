@@ -1,6 +1,6 @@
 # Star Wars Movie / SWAPI API
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app). Using API from [SWAPI](https://swapi.co).<br>
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app). Using API from [SWAPI](https://swapi.dev).<br>
 ## Getting Started
 
 Clone this repo :

@@ -1,15 +1,15 @@
 import { Table } from 'react-bootstrap';
 
-export default function ({
+export default function character({
     characters,
+    totalHeight,
     setCharacters,
     sortingDirections,
-    setSortingDirections
+    setSortingDirections,
 }) {
 
 
     const oneCharacter = characters?.[0];
-
     const sortData = (
         data,
         sortKey,
@@ -80,10 +80,15 @@ export default function ({
         return 'ASCENDING';
     };
 
+    const cmToInFt = (cm) => {
+        const inches = Math.round(cm / 2.54)
+        return `(${Math.floor(inches / 12)}ft / ${inches % 12}in)`
+
+    }
 
     return (
         <div className='characterTable'>
-            <p>Movie Characters</p>
+            <h2>Movie Characters</h2>
             <Table striped bordered hover>
                 <thead>
                     <tr>
@@ -112,6 +117,7 @@ export default function ({
                                                 <td key={k}>
                                                     {character[quality]}
                                                 </td>
+
                                             )
                                         })
                                     }
@@ -119,6 +125,11 @@ export default function ({
                             )
                         })
                     }
+                    <tr>
+                        <td>Total: <strong>{characters.length} characters</strong></td>
+                        <td>{" "}</td>
+                        <td><strong>{totalHeight} cm  {cmToInFt(totalHeight)}</strong></td>
+                    </tr>
                 </tbody>
             </Table>
         </div>

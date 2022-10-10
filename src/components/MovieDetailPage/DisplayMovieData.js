@@ -1,38 +1,40 @@
 import { Row, Col } from 'react-bootstrap';
 import Characters from './../MovieDetailPage/MovieCharacters'
-import SpeciesCount from './../MovieDetailPage/SpeciesCount'
 
 
 export default function DisplayMovieData({
     title,
     episodeId,
-    speciesCount,
+    openingCrawl,
     director,
+    totalHeight,
     releaseDate,
     characters,
     setCharacters,
     sortingDirections,
     setSortingDirections
 }) {
+    // console.log(characters)
     return (
         <div>
-            <h1>{title}</h1>
-            <p>Episode #{episodeId}</p>
-            <h6>The movie was directed by {director} and released on {releaseDate}</h6>
-
+            <h2>The Story</h2>
+            <div className="menu">
+                <div className="menu__item">
+                    <div className="marquee">
+                        <div className="marquee__inner">
+                            <span className='help'>{openingCrawl}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <Row>
                 <Col lg={8}>
                     <Characters
                         characters={characters}
+                        totalHeight={totalHeight}
                         setCharacters={setCharacters}
                         sortingDirections={sortingDirections}
                         setSortingDirections={setSortingDirections}
-                    />
-                </Col>
-
-                <Col>
-                    <SpeciesCount 
-                        speciesCount={speciesCount}
                     />
                 </Col>
             </Row>

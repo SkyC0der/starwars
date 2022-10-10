@@ -8,6 +8,7 @@ export default function header() {
                 <Container>
                     <Navbar.Brand href="/">
                         <img src={logo} alt="Star wars logo"/>
+                        
                     </Navbar.Brand>
                 </Container>
             </Navbar>

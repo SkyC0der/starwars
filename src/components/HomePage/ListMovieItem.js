@@ -1,5 +1,4 @@
 import { Card } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
 
 export default function ListMovieItem({
     title,
@@ -12,9 +11,9 @@ export default function ListMovieItem({
         <Card className='movieCard'>
             <Card.Body>
                 <Card.Title> 
-                <Link to={`/films/${id}`}>
+                <span>
                     {title} 
-                </Link>
+                </span>
                 </Card.Title>
                 <Card.Subtitle className="mb-2 text-muted">Episode #{episodeId} </Card.Subtitle>
                 <Card.Text>
